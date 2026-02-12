@@ -72,6 +72,18 @@ class FundraiserDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+# CHECK WITH IRAH
+    def delete(self, request, pk):
+        """Delete a fundraiser"""
+        fundraiser = get_object_or_404(Fundraiser, pk=pk)
+
+         # Check object-level permissions
+        self.check_object_permissions(request, fundraiser)
+
+        fundraiser.delete()
+        # 204 means success with no content to return
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class PledgeList(APIView):
 
     def get(self, request):

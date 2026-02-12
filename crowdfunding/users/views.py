@@ -27,9 +27,22 @@ class CustomUserList (APIView):
         )
 class CustomUserDetail(APIView):
     def get(self, request,pk):
-        user = get_object_or_404(CustomUser,pk)
+        user = get_object_or_404(CustomUser,pk=pk)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
+    
+# CHECK WITH IRAH
+
+    def delete(self,request, pk):
+        """Delete a user"""
+        user = get_object_or_404(CustomUser,pk=pk)
+
+        # Check object-level permissions
+        self.check_object_permissions(request, user)
+
+        user.delete()
+        # 204 means success with no content to return
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
