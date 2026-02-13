@@ -82,7 +82,7 @@ class FundraiserDetail(APIView):
 
         fundraiser.delete()
         # 204 means success with no content to return
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'msg': 'Delete successful'}, status=status.HTTP_204_NO_CONTENT)
 
 class PledgeList(APIView):
 
