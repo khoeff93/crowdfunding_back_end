@@ -72,7 +72,6 @@ class FundraiserDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-# CHECK WITH IRAH
     def delete(self, request, pk):
         """Delete a fundraiser"""
         fundraiser = get_object_or_404(Fundraiser, pk=pk)
@@ -82,7 +81,7 @@ class FundraiserDetail(APIView):
 
         fundraiser.delete()
         # 204 means success with no content to return
-        return Response({'msg': 'Delete successful'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'Delete successful'}, status=status.HTTP_204_NO_CONTENT)
 
 class PledgeList(APIView):
 
@@ -95,7 +94,7 @@ class PledgeList(APIView):
 
         serializer = PledgeSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(owner=request.user)
+            serializer.save(supporter=request.user)
             return Response(
                serializer.data,
                status=status.HTTP_201_CREATED
