@@ -20,7 +20,7 @@ class FundraiserList(APIView):
 
     def get(self, request):
         fundraisers = Fundraiser.objects.all()
-        serializer = FundraiserSerializer(fundraisers, many=True)
+        serializer = FundraiserDetailSerializer(fundraisers, many=True)
         return Response(serializer.data)
     
     def post(self, request):
