@@ -17,15 +17,19 @@ class Fundraiser(models.Model):
 
 class Pledge(models.Model):
     amount = models.IntegerField()
-    comment = models.CharField(max_length=200)
+    # blank=True so donors can leave the comment empty
+    comment = models.CharField(max_length=200, blank=True)
     anonymous = models.BooleanField()
     fundraiser = models.ForeignKey(
         'Fundraiser',
         on_delete=models.CASCADE,
         related_name='pledges'
     )
+    # null/blank=True so people can donate WITHOUT being logged in (no supporter)
     supporter = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='pledges'
+        related_name='pledges',
+        null=True,
+        blank=True
     )

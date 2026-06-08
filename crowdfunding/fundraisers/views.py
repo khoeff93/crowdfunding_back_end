@@ -94,7 +94,13 @@ class PledgeList(APIView):
 
         serializer = PledgeSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(supporter=request.user)
+            # If the person is logged in, record them as the supporter.
+            # If not, save the pledge with no supporter (an anonymous donation).
+            if request.user.is_authenticated:
+                supporter = request.user
+            else:
+                supporter = None
+            serializer.save(supporter=supporter)
             return Response(
                serializer.data,
                status=status.HTTP_201_CREATED
